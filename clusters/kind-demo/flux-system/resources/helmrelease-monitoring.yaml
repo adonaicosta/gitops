@@ -1,0 +1,108 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: monitoring
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+      version: 18.0.5
+  releaseName: monitoring
+  install:
+    createNamespace: true
+    remediation:
+      retries: -1
+  interval: 1m0s
+  targetNamespace: monitoring
+  storageNamespace: monitoring
+  values:
+    alertmanager:
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+        hosts:
+          - alertmanager.domain.com
+        paths:
+          - /
+        pathType: ImplementationSpecific
+
+
+    grafana:
+      enabled: true
+      env: {}
+      dashboardProviders: 
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+          - name: 'default'
+            orgId: 1
+            folder: ''
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+      
+      dashboards:
+        default:
+          nginx:
+            gnetId: 9614
+            revision: 1
+            datasource: Prometheus
+          felix-dashboard:
+            gnetId: 12175
+            revision: 5
+            datasource: Prometheus
+          calico:
+            gnetId: 3244
+            revision: 1
+            datasource: Prometheus
+          popeye-reports:
+            gnetId: 14398
+            revision: 1
+            datasource: Prometheus
+          
+      grafana.ini:
+        auth.anonymous:
+          enabled: true
+          org_name: Main Org.
+          org_role: Admin
+        auth:
+          disable_login_form: true
+          disable_signout_menu: true
+        auth.basic:
+          enabled: false
+
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+        hosts:
+          - grafana.domain.com
+        
+      additionalDataSources:
+        - name: Loki
+          type: loki
+          url: http://loki.logging.svc:3100
+          basicAuth: false
+          access: proxy
+          isDefault: false
+          jsonData:
+            maxLines: 100000
+
+    prometheus:
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+        hosts:
+          - prometheus.domain.com
+        paths:
+          - /
+        pathType: ImplementationSpecific

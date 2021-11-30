@@ -3,4 +3,8 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - gotk-sync.yaml
-- resources/
+- resources/helmrelease-ingress-nginx.yaml
+- resources/helmrelease-metrics-server.yaml
+- resources/helmrelease-monitoring.yaml
+
+

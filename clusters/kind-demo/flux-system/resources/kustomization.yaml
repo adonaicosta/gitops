@@ -5,6 +5,7 @@ resources:
 - helmrelease-metrics-server.yaml
 - helmrelease-monitoring.yaml
 - helmrelease-loki.yaml
+- helmrelease-keda.sh
 - web.yaml
 
 

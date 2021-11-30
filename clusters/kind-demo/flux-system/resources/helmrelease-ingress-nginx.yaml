@@ -38,6 +38,9 @@ spec:
         serviceMonitor:
           enabled: true
           scrapeInterval: 30s
+          additionalLabels:
+            release: monitoring
+
       service:
         type: NodePort
     defaultBackend:

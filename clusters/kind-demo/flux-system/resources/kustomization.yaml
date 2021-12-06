@@ -6,6 +6,7 @@ resources:
 - helmrelease-monitoring.yaml
 - helmrelease-loki.yaml
 - helmrelease-keda.yaml
+- helmrepository.yaml
 - web.yaml
 
 

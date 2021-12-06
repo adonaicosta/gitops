@@ -11,7 +11,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: grafana
-      version: 2.8.1
+      version: 2.5.0
   dependsOn:
   - name: monitoring
   install:
@@ -25,6 +25,9 @@ spec:
   targetNamespace: logging
   values:
     loki:
+      image:
+        tag: 2.4.1
+
       config:
         auth_enabled: false
         limits_config:

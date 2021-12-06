@@ -26,7 +26,7 @@ spec:
   values:
     loki:
       image:
-        tag: 2.4.1
+        tag: 2.3.0
 
       config:
         auth_enabled: false

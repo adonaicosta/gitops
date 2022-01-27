@@ -4,6 +4,7 @@ resources:
 - helmrelease-ingress-nginx.yaml
 - helmrelease-metrics-server.yaml
 - helmrelease-monitoring.yaml
+- helmrelease-monitoring-config.yaml
 - helmrelease-loki.yaml
 - helmrelease-keda.yaml
 - helmrepository.yaml
